@@ -54,7 +54,7 @@ This pipeline follows patterns used in actual engineering teams, not just a tuto
 **SonarQube code quality analysis**
 ![SonarQube dashboard](./SonarQube.jpeg)
 
-**Amazon ECR — versioned image builds**
+**Amazon ECR - versioned image builds**
 ![ECR repository](./ECR_Repo.jpg)
 
 **ECS service running and healthy**
