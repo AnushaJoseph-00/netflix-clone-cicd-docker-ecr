@@ -49,16 +49,16 @@ This pipeline follows patterns used in actual engineering teams, not just a tuto
 ![EC2 service](./AWS_EC2_Instances.jpg)
 
 **Full pipeline run — all stages passing**
-![Pipeline stages](./screenshots/pipeline-success.png)
+![Pipeline stages](./CI_CD-ECS.jpeg)
 
 **SonarQube code quality analysis**
-![SonarQube dashboard](./screenshots/sonarqube-dashboard.png)
+![SonarQube dashboard](./SonarQube.jpeg)
 
 **Amazon ECR — versioned image builds**
-![ECR repository](./screenshots/ecr-images.png)
+![ECR repository](./ECR_Repo.jpg)
 
 **ECS service running and healthy**
-![ECS service health](./screenshots/ecs-healthy.png)
+![ECS service health](./AWS_ECS.jpeg)
 
 **Live application**
-![Netflix clone running](./screenshots/live-app.png)
+![Netflix clone running](./Netflix.jpg)
