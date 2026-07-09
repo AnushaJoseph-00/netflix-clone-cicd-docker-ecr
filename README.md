@@ -1,1 +1,1 @@
-# Netflix Clone CI/CD Pipeline — Docker & ECR
+# Netflix Clone CI/CD Pipeline — Jenkins, SonarQube, Docker, ECR and ECS
