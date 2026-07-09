@@ -1,5 +1,5 @@
 # Netflix Clone CI/CD Pipeline — Jenkins, SonarQube, Docker, ECR and ECS
-A containerized CI/CD pipeline for a Netflix clone application, built with Jenkins, SonarQube, Docker, Amazon ECR, and AWS ECS (Fargate). This project is an extension of my earlier native-install CI/CD pipeline, rebuilt to demonstrate containerization and cloud-native deployment.
+A containerized CI/CD pipeline for a Netflix clone application, built with Jenkins, SonarQube, Docker, Amazon ECR, and AWS ECS (Fargate). This project is an extension of my earlier CI/CD pipeline, rebuilt to demonstrate containerization and cloud-native deployment.
 
 ## Overview
 
@@ -23,3 +23,42 @@ The previous CI/CD project used Jenkins, SonarQube, and Nexus on EC2, with the a
 - Jenkins and SonarQube are the only two components running the traditional way, installed directly on EC2 instances. Everything from the image registry onward — ECR, ECS, and the load balancer — is fully managed by AWS. The entire setup lives inside a VPC, a private network boundary that keeps it isolated from the open internet by default.
 
 - One deliberate design choice: Jenkins' pipeline stops once the image is published to ECR. I chose to deploy that image to ECS manually rather than automating it, so I could understand each step of the deployment process hands-on before automating it.
+
+## Why this mirrors real-world DevOps practice
+
+This pipeline follows patterns used in actual engineering teams, not just a tutorial setup:
+
+- **Separation of build and deploy** — many organizations intentionally split "build and publish an artifact" from "deploy it," often owned by different teams or requiring a manual approval step. This project reflects that same separation rather than collapsing everything into one automatic flow.
+- **Quality gates before deployment** — code doesn't reach the build stage unless it passes both automated tests and a SonarQube quality gate, the same gatekeeping model used in production pipelines to stop bad code before it ships.
+- **Immutable, versioned artifacts** — every build produces a uniquely tagged Docker image pushed to a registry, so any version can be traced back to the exact code and pipeline run that produced it.
+- **Serverless container orchestration** — using ECS Fargate instead of managing EC2 servers directly mirrors the industry shift toward reducing infrastructure management overhead wherever possible.
+  
+## Pipeline Stages
+
+1. **Fetch code** — checkout from GitHub
+2. **Install Dependencies** — `npm install`
+3. **Unit Tests** — `npm test`
+4. **Sonar Code Analysis** — static analysis via SonarQube Scanner
+5. **Quality Gate** — pipeline waits for SonarQube's pass/fail verdict via webhook
+6. **Build App Image** — multi-stage Docker build (Node build stage → nginx serve stage), with the TMDB API key injected via build argument
+
+   
+## Screenshots
+
+**AWS EC2 service running**
+![EC2 service](./screenshots/ecs-healthy.png)
+
+**Full pipeline run — all stages passing**
+![Pipeline stages](./screenshots/pipeline-success.png)
+
+**SonarQube code quality analysis**
+![SonarQube dashboard](./screenshots/sonarqube-dashboard.png)
+
+**Amazon ECR — versioned image builds**
+![ECR repository](./screenshots/ecr-images.png)
+
+**ECS service running and healthy**
+![ECS service health](./screenshots/ecs-healthy.png)
+
+**Live application**
+![Netflix clone running](./screenshots/live-app.png)
